@@ -1,1 +1,1 @@
-p-core
+middle-core
