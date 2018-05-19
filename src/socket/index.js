@@ -1,17 +1,32 @@
 import invariant from 'invariant';
-
+const SocketIO=require('socket.io-client');
 var readyState={
-    //连接还没开启。
-    connecting:0,
+    //正在链接的事件。
+    connecting:'connecting',
 
     //连接已开启并准备好进行通信
-    open:1,
+    connected:'connected',
 
-    //连接正在关闭的过程中
-    closing:2,
+    //断开连接的事件
+    disconnect:'disconnect',
 
-    //连接已经关闭，或者连接无法建立
-    closed:3
+    //连接错误事件处理
+    error:'error',
+
+    //连接超时的事件
+    connect_timeout:'connect_timeout',
+
+    //成功重新连接的事件
+    reconnect:'reconnect',
+
+    //正在重新连接
+    reconnecting:'reconnecting',
+
+    //重新连接失败
+    reconnect_failed:'reconnect_failed',
+
+    //连接失败的事件
+    connect_failed:'connect_failed'
 }
 export class WebSocketUtil{
     //static ws=null;
@@ -34,59 +49,67 @@ export class WebSocketUtil{
             }
         });
     }
-    static registerInstanceWebSocket(url,initSendTitle){
-        var host = window.document.location.host.replace(/:.*/, '');
-        url=url||`ws://${host}:8080`;
+    static registerInstanceWebSocket(url,prams){
         if(this.wss.length===0){
-            let socket=new WebSocket(url);
+            let socket=new SocketIO(url,{transports: ['websocket']});
+            socket.status=readyState.connecting;
             this.wss.push({key:url,ws:socket});
         }
         else {
             let socket= this.getInstanceSocket(url);
-            if(!socket||socket.readyState===readyState.closed){
-                socket.readyState&&this.clear(url);
+            if(!socket||socket.status===readyState.disconnect){
+                socket.status&&this.clear(url);
                 //invariant(url, 'you must be pass in url');
-                socket=new WebSocket(url);
+                socket=new SocketIO(url);
                 this.wss.push({key:url,ws:socket})
             }
         }
-        this.initListerEvent(url,initSendTitle)
+        this.initListerEvent(url,prams)
     }
-    /*static getInstanceWebSocket(url){
-     if(!this.ws||this.ws.readyState===readyState.closed){
-     //invariant(url, 'you must be pass in url');
-     var host = window.document.location.host.replace(/:.*!/, '');
-     url=url||`ws://${host}:8080`;
-     this.ws=new WebSocket(url);
-     }
-     return this.ws;
-     }*/
-    static initListerEvent(url,initSendTitle){
+    static initListerEvent(url,prams){
         invariant(url, 'url can not be undefined');
         let socket=this.getInstanceSocket(url);
         invariant(socket, 'socket can not be undefined');
-        if(!socket.onopen){
-            socket.onopen=function (event) {
-                initSendTitle&&this.send(initSendTitle);
-            }
-        }
-        if(!socket.onclose){
-            socket.onclose=function (event) {
-                console.log('关闭');
-                console.log(event)
-            }
+        if(socket.status===readyState.connecting){
+            socket.on('connect',(data)=>{
+                socket.status=readyState.connected;
+                socket.emit('send', prams);
+            })
+            socket.on('disconnect', (data) => {
+                socket.status = readyState.disconnect;
+            });
+
+            socket.on('error', (err) => {
+                socket.status = readyState.error;
+            });
+
+            socket.on('reconnect', (data) => {
+                socket.status = readyState.connected;
+            });
+            socket.on('reconnecting', (data) => {
+                socket.status =readyState.reconnecting;
+            });
+
+            socket.on('reconnect_failed', (error) => {
+                socket.status = readyState.connect_failed;
+            });
         }
     }
     static receiveMessage(url,fn){
         invariant(url, 'url can not be undefined');
         let socket=this.getInstanceSocket(url);
         invariant(socket, 'socket can not be undefined');
-        socket.onmessage = function (event) {
-            console.log(event);
-            fn&&fn(event.data);
-        };
+        socket.on('message', data => {
+            fn&&fn(data);
+        });
     }
-    static reappearOpenWebSocket(url,initOpenTitle){
-        this.registerInstanceWebSocket(url,initOpenTitle);
+    static sendMessage(url,prams){
+        invariant(url, 'url can not be undefined');
+        let socket=this.getInstanceSocket(url);
+        invariant(socket, 'socket can not be undefined');
+        socket.emit('send',prams);
+    }
+    static reappearOpenWebSocket(url,prams){
+        this.registerInstanceWebSocket(url,prams);
     }
 }

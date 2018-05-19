@@ -43,7 +43,12 @@ function doRequest(req, option) {
                 return;
             }
             let result=res.body||res.text;
-            resolve(JSON.parse(result));
+            if(typeof result==='object'){
+                resolve(result);
+            }
+            else {
+                resolve(JSON.parse(result));
+            }
         });
     });
 }

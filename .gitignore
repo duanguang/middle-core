@@ -6,3 +6,4 @@ lib
 dist
 
 \.e-config\.js
+.history
