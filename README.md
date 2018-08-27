@@ -48,3 +48,6 @@ yarn add middle-core
   post('url',parms,headerOptions) // 返回值:Promise
   ``` 
 - [json-mapper-object](https://github.com/duanguang/json-mapper-object.git)
+
+# Licensing
+MIT license
