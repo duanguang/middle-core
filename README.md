@@ -28,7 +28,7 @@ yarn add middle-core
   ```  
 - store
   ```
-  import {computed,action,observable,autorun,asMap} from 'middle-core/lib/store';// 直接暴露mobx里面API接口
+  import {computed,action,observable,autorun,asMap} from 'middle-core/lib/store';//直接暴露mobx里面API接口
   ```
   ``` 
   import {Lifecycle} from 'middle-core/lib/store'; //状态周期 {Application: 0, History: 1, Location: 2};
@@ -39,7 +39,7 @@ yarn add middle-core
 - store-react
   ```
   import { observer , bind } from 'middle-core/lib/store-react' ; 
-  // bind 我们重写了mobx-react inject,observer 参考 mobx-react
+  // bind 我们重写了mobx-react inject,observer 参考mobx-react
   ``` 
 - request
   ```
