@@ -48,6 +48,9 @@ yarn add middle-core
   post('url',parms,headerOptions) // 返回值:Promise
   ``` 
 - [json-mapper-object](https://github.com/duanguang/json-mapper-object.git)
+  ```
+  import {JsonProperty,MapperEntity} from 'middle-core/lib/json-mapper-object';
+  ```
 
 # Licensing
 MIT license
