@@ -18,7 +18,7 @@
     "web",
     "react-router",
     "request",
-    "http-request",
+    "react-request",
     "store",
     "mobx-react",
     "store-react"
