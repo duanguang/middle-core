@@ -51,6 +51,10 @@ yarn add middle-core
   ```
   import {JsonProperty,MapperEntity} from 'middle-core/lib/json-mapper-object';
   ```
+- [observableViewModel](https://github.com/duanguang/brain-store-utils.git)
+  ```js
+  import {observablePromise} from "middle-core/lib/store-utils";
+  ```  
 
 # Licensing
 MIT license
