@@ -987,9 +987,9 @@ brain-store-react@latest:
     hoist-non-react-statics "^1.2.0"
     mobx-react "^4.1.0"
 
-brain-store-utils@latest:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/brain-store-utils/-/brain-store-utils-0.0.3.tgz#ab44e3c26c9066b9bae149b26e13f427a85ccf6a"
+brain-store-utils@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/brain-store-utils/-/brain-store-utils-0.0.4.tgz#ff475393008af4c990703542e7170d76d882ef7e"
   dependencies:
     brain-store latest
     invariant "^2.2.1"
@@ -1005,9 +1005,9 @@ brain-store@latest:
     superagent "^3.4.4"
     warning "^3.0.0"
 
-brains@^0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/brains/-/brains-0.0.9.tgz#b7038086e0dcf2f74d1e071d72fb0147e27803e1"
+brains@latest:
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/brains/-/brains-0.0.12.tgz#e283b676747b9bf5ecb1ac6968f484f5e2379a41"
   dependencies:
     brain-store latest
     brain-store-react latest

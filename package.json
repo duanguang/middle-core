@@ -1,17 +1,17 @@
 {
-  "name": "middle-core",
-  "version": "0.0.24",
+  "name": "legions",
+  "version": "0.0.4",
   "description": "主要封装一些一些通用的工具函数方法，如http请求(get,post),react by router,实体映射，store操作类等。",
-  "main": "lib/index.js",
+  "main": "index.js",
   "scripts": {
     "build": "rimraf lib && babel src --out-dir lib",
     "test": "cross-env NODE_ENV=test nyc mocha --no-timeouts",
-    "debug": "mocha --require babel-register --require ./test/setup.js --no-timeouts",
-    "prepublish": "rimraf lib && babel src --out-dir lib"
+    "debug": "mocha --require babel-register --require ./test/setup.js --no-timeouts"
+    
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/duanguang/middle-core.git"
+    "url": "https://github.com/duanguang/legions.git"
   },
   "keywords": [
     "middle",
@@ -59,9 +59,6 @@
     "react-dom": "^15.1.0",
     "warning": "^3.0.0"
   },
-  "files": [
-    "lib"
-  ],
   "author": "duanguang",
   "license": "MIT"
 }
